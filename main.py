@@ -87,14 +87,14 @@ class Lemmer:
 		self.words_association = {}
 		[self.words_association.update({w:w}) for w in primaries]
 		[[self.words_association.update({sw:w}) for sw in secondaries if self.are_synonyms(w, sw) ] for w in primaries]
-		
+		[ self.words_association.update({w:w}) for w in self.words if w not in self.words_association.keys()]	
 
 	def are_synonyms(self, primary_word, secondary_word):
 		"""
 			Returns true if secondary word is a contraction of primary word
 		"""
 		try:
-			return primary_word.index(secondary_word[:-1]) == 0 and secondary_word[-1] == '.'
+			return primary_word != secondary_word[:-1] and primary_word.index(secondary_word[:-1]) == 0 and secondary_word[-1] == '.'
 		except ValueError:
 			return False
 
